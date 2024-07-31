@@ -50,6 +50,7 @@ const Contacts = () => {
       headerName: "Zip Code",
       flex: 1,
     },
+
   ];
 
   return (
