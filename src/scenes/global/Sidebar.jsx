@@ -51,7 +51,7 @@ const Sidebar = () => {
           backgroundColor: "transparent !important",
         },
         "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
+          padding: "5px 35px 5px 10px !important",
         },
         "& .pro-inner-item:hover": {
           color: "#868dfb !important",
@@ -68,7 +68,7 @@ const Sidebar = () => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
-              margin: "10px 0 20px 0",
+              margin: "10px 0 10px 0",
               color: colors.grey[100],
             }}
           >
@@ -94,8 +94,8 @@ const Sidebar = () => {
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
                   alt="profile-user"
-                  width="100px"
-                  height="100px"
+                  width="40%"
+                  height="40%"
                   src={`../../assets/avatar.svg`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
@@ -116,7 +116,7 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box paddingLeft={isCollapsed ? undefined : "5%"}>
             <Item
               title="Dashboard"
               to="/"

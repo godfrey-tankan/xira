@@ -42,7 +42,7 @@ const Team = () => {
       renderCell: ({ row: { access } }) => {
         return (
           <Box
-            width="60%"
+            width="100%"
             m="0 auto"
             p="5px"
             display="flex"
@@ -51,8 +51,8 @@ const Team = () => {
               access === "admin"
                 ? colors.greenAccent[600]
                 : access === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
+                  ? colors.greenAccent[700]
+                  : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
@@ -69,10 +69,10 @@ const Team = () => {
   ];
 
   return (
-    <Box m="20px">
+    <Box m="10px">
       <Header title="TEAM" subtitle="Managing the Team Members" />
       <Box
-        m="40px 0 0 0"
+        m="10px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
