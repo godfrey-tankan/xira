@@ -18,19 +18,25 @@ const Dashboard = () => {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box m="20px">
+    <Box m="10px">
       {/* HEADER */}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="grid"
+        gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(4, 1fr)', md: 'repeat(4, 1fr)' }}
+        gridAutoRows={{ xs: "70px", sm: '70px', md: '70px' }}
+        gridColumn={{ xs: 'span 1', sm: 'span 8', md: 'span 8' }}
+        gap="20px"
+      >
         <Header title="DASHBOARD" subtitle="Welcome to xira" />
 
-        <Box>
+        <Box
+        >
           <Button
             sx={{
               backgroundColor: colors.blueAccent[700],
               color: colors.grey[100],
               fontSize: "14px",
               fontWeight: "bold",
-              padding: "10px 20px",
             }}
           >
             <DownloadOutlinedIcon sx={{ mr: "10px" }} />
@@ -42,13 +48,13 @@ const Dashboard = () => {
       {/* GRID & CHARTS */}
       <Box
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
+        gridTemplateColumns={{ xs: 'repeat(12, 1fr)', sm: 'repeat(12, 1fr)', md: 'repeat(12, 1fr)' }}
         gridAutoRows="140px"
         gap="20px"
       >
         {/* ROW 1 */}
         <Box
-          gridColumn="span 3"
+          gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -67,7 +73,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -86,7 +92,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -105,7 +111,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -126,16 +132,12 @@ const Dashboard = () => {
 
         {/* ROW 2 */}
         <Box
-          gridColumn="span 8"
+          gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 8' }}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
         >
           <Box
-            mt="25px"
-            p="0 30px"
-            display="flex "
-            justifyContent="space-between"
-            alignItems="center"
+
           >
             <Box>
               <Typography
@@ -166,18 +168,16 @@ const Dashboard = () => {
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           overflow="auto"
         >
           <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            borderBottom={`4px solid ${colors.primary[500]}`}
-            colors={colors.grey[100]}
-            p="15px"
+            gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}
+            gridRow="span 2"
+            backgroundColor={colors.primary[400]}
+            padding="10px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
               Recent Tickets
@@ -218,19 +218,19 @@ const Dashboard = () => {
 
         {/* ROW 3 */}
         <Box
-          gridColumn="span 4"
+          gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
-          p="30px"
+          padding="10px"
+
         >
           <Typography variant="h5" fontWeight="600">
             Query Summary
           </Typography>
           <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            mt="25px"
+            gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}
+            gridRow="span 2"
+            backgroundColor={colors.primary[400]}
           >
             <ProgressCircle size="125" />
             <Typography
@@ -244,26 +244,33 @@ const Dashboard = () => {
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
+          padding="10px"
         >
           <Typography
             variant="h5"
             fontWeight="600"
-            sx={{ padding: "30px 30px 0 30px" }}
+            sx={{ padding: "10px 10px 0 10px" }}
           >
             tickets Quantity
           </Typography>
-          <Box height="250px" mt="-20px">
+          <Box
+            height="250px"
+            gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}
+            gridRow="span 2"
+            backgroundColor={colors.primary[400]}
+            padding="10px"
+          >
             <BarChart isDashboard={true} />
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
-          padding="30px"
+          padding="10px"
         >
           <Typography
             variant="h5"
@@ -276,8 +283,8 @@ const Dashboard = () => {
             <GeographyChart isDashboard={true} />
           </Box>
         </Box>
-      </Box>
-    </Box>
+      </Box >
+    </Box >
   );
 };
 
