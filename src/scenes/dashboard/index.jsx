@@ -18,9 +18,11 @@ const Dashboard = () => {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box m="10px">
+    <Box m="10px"
+    >
       {/* HEADER */}
       <Box
+
         display="grid"
         gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(4, 1fr)', md: 'repeat(4, 1fr)' }}
         gridAutoRows={{ xs: "70px", sm: '70px', md: '70px' }}
