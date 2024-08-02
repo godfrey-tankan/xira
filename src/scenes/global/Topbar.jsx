@@ -17,7 +17,6 @@ const Topbar = () => {
   return (
     <Box display="flex" justifyContent="space-between" p={1}
       className="dashboard"
-
     >
       {/* SEARCH BAR */}
       <Box
