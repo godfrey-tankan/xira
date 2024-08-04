@@ -17,7 +17,6 @@ const Topbar = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   useEffect(() => {
-    // Get the person icon and the sidebar elements
     const personIcon = document.querySelector(".person-icon");
     const sideNav = document.querySelector(".sidebar");
 
