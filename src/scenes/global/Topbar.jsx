@@ -20,7 +20,6 @@ const Topbar = () => {
     const personIcon = document.querySelector(".person-icon");
     const sideNav = document.querySelector(".sidebar");
 
-    // Add a click event listener to the person icon
     if (personIcon && sideNav) {
       personIcon.addEventListener("click", () => {
         // Toggle the display of the sidebar
