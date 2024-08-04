@@ -1,6 +1,5 @@
 import { Box, IconButton, useTheme } from "@mui/material";
-import { useContext } from "react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import InputBase from "@mui/material/InputBase";
@@ -10,7 +9,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import { Style } from "@mui/icons-material";
+import Sidebar from "./Sidebar";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -18,26 +17,36 @@ const Topbar = () => {
   const colorMode = useContext(ColorModeContext);
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [selected, setSelected] = useState("Dashboard");
-  const personIcon = document.querySelector(".person-icon");
-  const sideNav = document.querySelector(".sidebar");
 
-  // Add a click event listener to the person icon
-  personIcon.addEventListener("click", () => {
-    // Toggle the display of the sidebar
-    sideNav.style.display = sideNav.style.display === "none" ? "block" : "none";
-  });
+  useEffect(() => {
+    // Get the person icon and the sidebar elements
+    const personIcon = document.querySelector(".person-icon");
+    const sideNav = document.querySelector(".sidebar");
+
+    // Add a click event listener to the person icon
+    if (personIcon && sideNav) {
+      personIcon.addEventListener("click", () => {
+        // Toggle the display of the sidebar
+        sideNav.style.display = sideNav.style.display === "none" ? "block" : "none";
+        setIsCollapsed((prevState) => !prevState);
+      });
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      if (personIcon && sideNav) {
+        personIcon.removeEventListener("click", () => {
+          sideNav.style.display = sideNav.style.display === "none" ? "block" : "none";
+          setIsCollapsed((prevState) => !prevState);
+        });
+      }
+    };
+  }, []);
 
   return (
-    <Box display="flex" justifyContent="space-between" p={1}
-      className="dashboard"
-    >
+    <Box display="flex" justifyContent="space-between" p={1} className="dashboard">
       {/* SEARCH BAR */}
-
-      <Box
-        display="flex"
-        backgroundColor={colors.primary[400]}
-        borderRadius="3px"
-      >
+      <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px">
         <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />
@@ -47,11 +56,7 @@ const Topbar = () => {
       {/* ICONS */}
       <Box display="flex">
         <IconButton onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === "dark" ? (
-            <DarkModeOutlinedIcon />
-          ) : (
-            <LightModeOutlinedIcon />
-          )}
+          {theme.palette.mode === "dark" ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
         </IconButton>
         <IconButton>
           <NotificationsOutlinedIcon />
@@ -60,15 +65,12 @@ const Topbar = () => {
           <SettingsOutlinedIcon />
         </IconButton>
         <IconButton>
-          <PersonOutlinedIcon
+          <MenuOutlinedIcon
             className="person-icon"
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={() => setIsCollapsed((prevState) => !prevState)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-
-
           />
         </IconButton>
-
       </Box>
     </Box>
   );
