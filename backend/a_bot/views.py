@@ -104,3 +104,33 @@ def process_whatsapp_message(body):
         send_message(data)
     except Exception as e:
         ...
+
+def send_message_template(recepient):
+    return json.dumps(
+    {
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": f"{recepient}",
+        "type": "template",
+        "template": {
+            "namespace": "7a757027_47cc_4bb8_997e_e1fdb0600675",
+            "name": "clava_home2",
+            "language": {
+                "code": "en",
+            }
+        }
+    }
+)
+
+def is_valid_whatsapp_message(body):
+    """
+    Check if the incoming webhook event has a valid WhatsApp message structure.
+    """
+    return (
+        body.get("object")
+        and body.get("entry")
+        and body["entry"][0].get("changes")
+        and body["entry"][0]["changes"][0].get("value")
+        and body["entry"][0]["changes"][0]["value"].get("messages")
+        and body["entry"][0]["changes"][0]["value"]["messages"][0]
+    )

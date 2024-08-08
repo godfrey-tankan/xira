@@ -26,6 +26,7 @@ load_dotenv(dotenv_path)
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 VERIFY_TOKEN = os.getenv('VERIFY_TOKEN')
 APP_SECRET = os.getenv('APP_SECRET')
+APP_ID = os.getenv('APP_ID')
 VERSION = os.getenv('VERSION')
 PHONE_NUMBER_ID = os.getenv('PHONE_NUMBER_ID')
 

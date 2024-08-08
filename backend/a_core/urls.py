@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from a_home.views import *
 from a_users.views import *
+from a_bot.views import webhook
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -27,6 +28,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('profile/', include('a_users.urls')),
     path('@<username>/', profile_view, name='profile'),
+    path('webhook/', webhook, name='webhook'),
     
 ]
 urlpatterns += [
