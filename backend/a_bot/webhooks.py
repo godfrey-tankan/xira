@@ -3,11 +3,12 @@ import json
 from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from views import *
+from .views import *
+from .signatures import signature_required
 
 logger = logging.getLogger(__name__)
 
-@csrf_exempt  # Disables CSRF protection for this view
+@signature_required
 def webhook(request):
     if request.method == "GET":
         return verify(request)

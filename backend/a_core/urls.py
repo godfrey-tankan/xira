@@ -29,7 +29,6 @@ urlpatterns = [
     path('profile/', include('a_users.urls')),
     path('@<username>/', profile_view, name='profile'),
     path('webhook/', webhook, name='webhook'),
-    
 ]
 urlpatterns += [
     path('tickets/edit/<int:pk>/', TicketEditView.as_view(), name='ticket-edit'),
