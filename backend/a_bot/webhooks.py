@@ -8,6 +8,7 @@ from .signatures import signature_required
 
 logger = logging.getLogger(__name__)
 
+@csrf_exempt
 @signature_required
 def webhook(request):
     if request.method == "GET":
