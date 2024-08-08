@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from a_home.views import *
 from a_users.views import *
-from a_bot.views import webhook
+from a_bot.webhooks import webhook
 from django.conf import settings
 from django.conf.urls.static import static
 
