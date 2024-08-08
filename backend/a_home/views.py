@@ -7,6 +7,7 @@ from .models import Ticket, TicketLog, Comment, FAQ
 from .serializers import TicketSerializer, TicketLogSerializer, CommentSerializer, FAQSerializer
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import TicketForm, CommentForm
+from django.views.generic import UpdateView
 
 # Create your views here.
 def home_view(request):
@@ -33,6 +34,21 @@ class TicketLogDetailView(generics.RetrieveAPIView):
     queryset = TicketLog.objects.all()
     serializer_class = TicketLogSerializer
     permission_classes = [IsAuthenticated]
+
+from django.views.generic import DeleteView
+from django.urls import reverse_lazy
+from .models import Ticket
+
+class TicketDeleteView(DeleteView):
+    model = Ticket
+    template_name = 'ticket_confirm_delete.html' 
+    success_url = reverse_lazy('ticket-list')  
+
+class TicketEditView(UpdateView):
+    model = Ticket
+    fields = ['title', 'description', 'status', 'assigned_to'] 
+    template_name = 'your_template.html'
+    success_url = '/tickets/'
 
 class CommentListCreateView(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
