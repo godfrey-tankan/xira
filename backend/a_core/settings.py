@@ -12,8 +12,25 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from dotenv import load_dotenv
+import os
+# Load environment variables from a .env file
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+# Path to the .env file
+dotenv_path = os.path.join(BASE_DIR, '.env')
+
+# Load the .env file
+load_dotenv(dotenv_path)
+
+ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
+VERIFY_TOKEN = os.getenv('VERIFY_TOKEN')
+APP_SECRET = os.getenv('APP_SECRET')
+VERSION = os.getenv('VERSION')
+PHONE_NUMBER_ID = os.getenv('PHONE_NUMBER_ID')
+
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 
 # Quick-start development settings - unsuitable for production
@@ -45,6 +62,7 @@ INSTALLED_APPS = [
     'a_users',
     'django_htmx',
     'rest_framework',
+    'a_bot',
 ]
 
 MIDDLEWARE = [

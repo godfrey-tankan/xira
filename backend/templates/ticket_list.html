@@ -22,8 +22,7 @@
         <td>{{ ticket.get_status_display }}</td>
         <td>{{ ticket.created_at }}</td>
         <td>
-          {{ ticket.assigned_to.username if ticket.assigned_to else "Unassigned"
-          }}
+          {{ ticket.assigned_to.username}}
         </td>
         <td>
           <a
