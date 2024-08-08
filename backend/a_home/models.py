@@ -50,7 +50,6 @@ class FAQ(models.Model):
         ('technical', 'Technical'),
         ('account', 'Account'),
     ]
-
     question = models.CharField(max_length=255)
     answer = models.TextField()
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='general')
