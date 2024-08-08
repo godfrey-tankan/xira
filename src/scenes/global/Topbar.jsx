@@ -24,14 +24,12 @@ const Topbar = () => {
     if (personIcon && sideNav) {
       personIcon.addEventListener("click", () => {
         // Toggle the display of the sidebar
-        sideNav.style.display = sideNav.style.display === "none" ? "block" : "none";
         setIsCollapsed((prevState) => !prevState);
         sideNav.style.display = sideNav.style.display === "none" ? "block" : "none";
 
       });
     }
 
-    // Clean up the event listener when the component unmounts
     return () => {
       if (personIcon && sideNav) {
         personIcon.removeEventListener("click", () => {
