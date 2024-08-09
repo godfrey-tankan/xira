@@ -205,7 +205,7 @@ def accept_ticket(wa_id,name, ticket_id):
     support_member = SupportMember.objects.filter(phone_number=wa_id[0]).first()
     is_ticket_open = False
     try:
-        if check_ticket := Ticket.objects.get(id=ticket_id).first():
+        if check_ticket := Ticket.objects.get(id=ticket_id):
             is_ticket_open = check_ticket.status.lower() == 'open'
         else:
             return "wrong ticket id"
