@@ -31,7 +31,7 @@ def generate_response(response, wa_id, name):
         return f"Hello {name}, how can I help you today?"
     if support_member and support_member.user_mode == ACCEPT_TICKET_MODE:
         print('accepting ticket')
-        response=accept_ticket(wa_id,name, 1)
+        response=accept_ticket(wa_id,name, response)
         return response
     if not support_member or wa_id[0]=="263779586059":
         print('not support member')
