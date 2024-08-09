@@ -23,11 +23,11 @@ class Ticket(models.Model):
     closed_at = models.DateTimeField(null=True, blank=True)
     expired_at = models.DateTimeField(null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        if not self.assigned_to:
-            admin_user = User.objects.filter(is_staff=True).first() 
-            self.assigned_to = admin_user
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.assigned_to:
+    #         admin_user = User.objects.filter(is_staff=True).first() 
+    #         self.assigned_to = admin_user
+    #     super().save(*args, **kwargs)
     def __str__(self):
         return f"Ticket #{self.id} - {self.title} ({self.status})"
 
