@@ -29,14 +29,14 @@ def generate_response(response, wa_id, name):
         
     if response.lower() in greeting_messages:
         return f"Hello {name}, how can I help you today?"
+    if support_member and support_member.user_mode == ACCEPT_TICKET_MODE:
+        print('accepting ticket')
+        response=accept_ticket(wa_id,name, 1)
+        return response
     if not support_member or wa_id[0]=="263779586059":
         print('not support member')
         response = handle_inquiry(wa_id, response, name)
         print('handling inquiry',response)
-        return response
-    if support_member and support_member.user_mode == ACCEPT_TICKET_MODE:
-        print('accepting ticket')
-        response=accept_ticket(wa_id,name, 1)
         return response
     return f"Hello {name}, you said: {response}"    
 
