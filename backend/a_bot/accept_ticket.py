@@ -6,13 +6,12 @@ from a_home.models import *
 from django.contrib.auth.models import Group
 
 def handle_inquiry(wa_id, response, name):
-    ticket = Ticket(
+    ticket = Ticket.objects.create(
         title=f"Inquiry from {name}",
         description=response,
         created_by=wa_id[0], 
         status='open'
     )
-    ticket.save()
     # Log the ticket creation
     TicketLog.objects.create(
         ticket=ticket,

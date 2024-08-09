@@ -13,9 +13,9 @@ class Ticket(models.Model):
     ]
 
     title = models.CharField(max_length=255)
-    description = models.TextField()
-    created_by = models.ForeignKey(User, related_name='created_tickets', on_delete=models.CASCADE)
-    assigned_to = models.ForeignKey(User, related_name='assigned_tickets', on_delete=models.SET_NULL, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    created_by = models.CharField(max_length=255, null=True, blank=True)
+    assigned_to = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -34,7 +34,7 @@ class Ticket(models.Model):
 class TicketLog(models.Model):
     ticket = models.ForeignKey(Ticket, related_name='logs', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=Ticket.STATUS_CHOICES)
-    changed_by = models.ForeignKey(User, related_name='ticket_logs', on_delete=models.CASCADE)
+    changed_by = models.CharField(max_length=255, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -42,7 +42,7 @@ class TicketLog(models.Model):
 
 class Comment(models.Model):
     ticket = models.ForeignKey(Ticket, related_name='comments', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='ticket_comments', on_delete=models.CASCADE)
+    user = models.CharField(max_length=255, null=True, blank=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

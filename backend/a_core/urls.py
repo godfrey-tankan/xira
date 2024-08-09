@@ -19,6 +19,7 @@ from django.urls import path, include
 from a_home.views import *
 from a_users.views import *
 from a_bot.webhooks import webhook
+from a_bot.accept_ticket import *
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -47,6 +48,7 @@ urlpatterns += [
     path('tickets/', ticket_list, name='ticket-list'),
     path('tickets/create/', ticket_create, name='ticket-create'),
     path('ticket/<int:pk>/', ticket_detail, name='ticket-detail'),
+    path('handle-enquiry/', handle_inquiry, name='handle-enquiry'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
