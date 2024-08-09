@@ -48,7 +48,6 @@ urlpatterns += [
     path('tickets/', ticket_list, name='ticket-list'),
     path('tickets/create/', ticket_create, name='ticket-create'),
     path('ticket/<int:pk>/', ticket_detail, name='ticket-detail'),
-    path('handle-enquiry/', handle_inquiry, name='handle-enquiry'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
