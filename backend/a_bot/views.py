@@ -196,7 +196,7 @@ def broadcast_messages(name,ticket=None,message=None):
 def accept_ticket(wa_id,name, ticket_id):
     try:
         ticket_id = int(ticket_id)
-    except ValueError:
+    except Exception as e:
         return "Invalid ticket id"
     
     support_team_mobiles =[support_member.phone_number for support_member in SupportMember.objects.all()]
