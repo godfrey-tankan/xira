@@ -19,7 +19,7 @@ from .accept_ticket import *
 def generate_response(response, wa_id, name):
     if response in ["hi", "hello", "hey","hie"]:
         return f"Hello {name}, how can I help you today?"
-    if len(response) > 10:
+    if len(response) > 5:
         response =handle_inquiry(wa_id, response, name)
         return response
     if wa_id[0] == "263779586059":
