@@ -21,6 +21,10 @@ def generate_response(response, wa_id, name):
         return f"Hello {name}, how can I help you today?"
     if len(response) > 10:
         response =handle_inquiry(wa_id, response, name)
+        return response
+    if wa_id[0] == "263779586059":
+        response=accept_ticket(wa_id,name, 1)
+        return response
     return f"Hello {name}, you said: {response}"    
 
 
