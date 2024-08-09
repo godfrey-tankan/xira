@@ -15,7 +15,7 @@ class TicketLogAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['ticket', 'user', 'created_at']
+    list_display = ['id','ticket', 'user', 'created_at']
     search_fields = ['ticket', 'user']
     list_filter = ['created_at']
 
@@ -27,6 +27,6 @@ class FAQAdmin(admin.ModelAdmin):
 
 @admin.register(SupportMember)
 class SupportMemberAdmin(admin.ModelAdmin):
-    list_display = ['username', 'is_active','phone_number']
+    list_display = ['id','username', 'is_active','phone_number']
     search_fields = ['username']
     list_filter = ['is_active','is_deleted']
