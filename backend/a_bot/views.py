@@ -206,11 +206,11 @@ def accept_ticket(wa_id,name, ticket_id):
     is_ticket_open = False
     try:
         if check_ticket := Ticket.objects.get(id=ticket_id).first():
-            is_ticket_open = check_ticket.status == 'open'
+            is_ticket_open = check_ticket.status.lower() == 'open'
         else:
             return "wrong ticket id"
     except Ticket.DoesNotExist:
-        return "Ticket not available or already assigned"
+        return "error ticket not available or already assigned "
     if is_ticket_open:
         ticket = Ticket.objects.get(id=ticket_id)
         ticket.assigned_to = support_member.phone_number
