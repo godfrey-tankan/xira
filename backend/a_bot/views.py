@@ -22,13 +22,19 @@ from .responses import *
 # Create your views here.
 
 def generate_response(response, wa_id, name):
-    if response in ["hi", "hello", "hey","hie"]:
+    try:
+        support_member = SupportMember.objects.get(phone_number=wa_id[0])
+    except SupportMember.DoesNotExist:
+        support_member = None
+        
+    if response in greeting_messages:
         return f"Hello {name}, how can I help you today?"
-    if len(response) > 5:
+    if not support_member and wa_id[0]=="263779586059":
+        print('not support member')
         response = handle_inquiry(wa_id, response, name)
         print('handling inquiry',response)
         return response
-    if wa_id[0] == "263779586059" and response == "1":
+    if support_member and support_member.user_mode == ACCEPT_TICKET_MODE:
         print('accepting ticket')
         response=accept_ticket(wa_id,name, 1)
         return response
@@ -188,6 +194,11 @@ def broadcast_messages(name,ticket=None,message=None):
     return response
 @csrf_exempt
 def accept_ticket(wa_id,name, ticket_id):
+    try:
+        ticket_id = int(ticket_id)
+    except ValueError:
+        return "Invalid ticket id"
+    
     support_team_mobiles =[support_member.phone_number for support_member in SupportMember.objects.all()]
     if wa_id[0] not in support_team_mobiles:
         return "You are not authorized to accept tickets"
