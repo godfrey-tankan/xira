@@ -165,18 +165,21 @@ def handle_inquiry(wa_id, response, name):
         changed_by=wa_id[0]
     )
     with contextlib.suppress(SupportMember.DoesNotExist):
-        broadcast_messages(wa_id, response, name,ticket)
+        broadcast_messages(name,ticket)
     response = 'Thank you for contacting us. A support member will be assisting you shortly.'
 
     return response
 
-def broadcast_messages(wa_id, response, name,ticket=None):
+def broadcast_messages(name,ticket=None,message=None):
     support_members = SupportMember.objects.all()
     for support_member in support_members:
         user_mobile = support_member.phone_number
         support_member.user_mode = ACCEPT_TICKET_MODE
         support_member.save()
-        message=accept_ticket_response.format(support_member.username,name,ticket.id, ticket.description)
+        if message:
+            message=message
+        else:
+            message=accept_ticket_response.format(support_member.username,name,ticket.id, ticket.description)
         try:
             data = get_text_message_input(user_mobile, message, None)
             response = send_message(data)
@@ -188,7 +191,7 @@ def accept_ticket(wa_id,name, ticket_id):
     support_team_mobiles =[support_member.phone_number for support_member in SupportMember.objects.all()]
     if wa_id[0] not in support_team_mobiles:
         return "You are not authorized to accept tickets"
-    support_member = wa_id[0]
+    support_member = SupportMember.objects.filter(phone_number=wa_id[0]).first()
     is_ticket_open = False
     try:
         if check_ticket := Ticket.objects.get(id=ticket_id).first():
@@ -199,14 +202,15 @@ def accept_ticket(wa_id,name, ticket_id):
         return "Ticket not available or already assigned"
     if is_ticket_open:
         ticket = Ticket.objects.get(id=ticket_id)
-        ticket.assigned_to = support_member
+        ticket.assigned_to = support_member.phone_number
         ticket.status = 'pending'
         ticket.save()
         TicketLog.objects.create(
             ticket=ticket,
             status='pending',
-            changed_by=support_member
+            changed_by=support_member.phone_number
         )
-        return f"ticket #{ticket.id} is now assigned to {support_member.username}"
+        message=f"ticket #{ticket.id} is now assigned to {support_member.username if support_member.username.lower() != 'support' else support_member.phone_number}"
+        return broadcast_messages(name,None,message)
     else:
         return "Ticket not available or already assigned"
