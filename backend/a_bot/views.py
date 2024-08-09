@@ -6,7 +6,7 @@ import time
 import random
 from django.conf import settings
 import requests as requests
-
+from .accept_ticket import *
 
 
 # curl -i -X POST `
@@ -15,6 +15,15 @@ import requests as requests
 #   -H 'Content-Type: application/json' `
 #   -d '{ \"messaging_product\": \"whatsapp\", \"to\": \"263779586059\", \"type\": \"template\", \"template\": { \"name\": \"hello_world\", \"language\": { \"code\": \"en_US\" } } }'
 # Create your views here.
+
+def generate_response(response, wa_id, name):
+    if response in ["hi", "hello", "hey","hie"]:
+        return f"Hello {name}, how can I help you today?"
+    if len(response) > 10:
+        response =handle_inquiry(wa_id, response, name)
+    return f"Hello {name}, you said: {response}"    
+
+
 def get_text_message_input(recipient, text,media,template=False):
     if media:
         return json.dumps(
@@ -52,9 +61,6 @@ def get_text_message_input(recipient, text,media,template=False):
             "text": {"preview_url": False, "body": text},
         }
     )
-
-def generate_response(response, wa_id, name):
-    return f"Hello {name}, you said: {response}"    
     
 def send_message(data,template=False):
     headers = {
