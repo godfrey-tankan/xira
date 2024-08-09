@@ -29,7 +29,7 @@ def generate_response(response, wa_id, name):
         
     if response.lower() in greeting_messages:
         return f"Hello {name}, how can I help you today?"
-    if not support_member and wa_id[0]=="263779586059":
+    if not support_member or wa_id[0]=="263779586059":
         print('not support member')
         response = handle_inquiry(wa_id, response, name)
         print('handling inquiry',response)
