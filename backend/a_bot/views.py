@@ -6,7 +6,12 @@ import time
 import random
 from django.conf import settings
 import requests as requests
-from .accept_ticket import *
+import contextlib
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from a_home.models import *
+from .responses import *
+
 
 
 # curl -i -X POST `
@@ -135,6 +140,7 @@ def send_message_template(recepient):
 )
 
 def is_valid_whatsapp_message(body):
+    
     """
     Check if the incoming webhook event has a valid WhatsApp message structure.
     """
@@ -146,3 +152,61 @@ def is_valid_whatsapp_message(body):
         and body["entry"][0]["changes"][0]["value"].get("messages")
         and body["entry"][0]["changes"][0]["value"]["messages"][0]
     )
+def handle_inquiry(wa_id, response, name):
+    ticket = Ticket.objects.create(
+        title=f"Inquiry from {name}",
+        description=response,
+        created_by=wa_id[0], 
+        status='open'
+    )
+    TicketLog.objects.create(
+        ticket=ticket,
+        status='open',
+        changed_by=wa_id[0]
+    )
+    with contextlib.suppress(SupportMember.DoesNotExist):
+        broadcast_messages(wa_id, response, name,ticket)
+    response = 'Thank you for contacting us. A support member will be assisting you shortly.'
+
+    return response
+
+def broadcast_messages(wa_id, response, name,ticket=None):
+    support_members = SupportMember.objects.all()
+    for support_member in support_members:
+        user_mobile = support_member.phone_number
+        support_member.user_mode = ACCEPT_TICKET_MODE
+        support_member.save()
+        message=accept_ticket_response.format(support_member.username,name,ticket.id, ticket.description)
+        try:
+            data = get_text_message_input(user_mobile, message, None)
+            response = send_message(data)
+        except Exception as e:
+            response = "error sending messages"
+    return response
+@csrf_exempt
+def accept_ticket(wa_id,name, ticket_id):
+    support_team_mobiles =[support_member.phone_number for support_member in SupportMember.objects.all()]
+    if wa_id[0] not in support_team_mobiles:
+        return "You are not authorized to accept tickets"
+    support_member = wa_id[0]
+    is_ticket_open = False
+    try:
+        if check_ticket := Ticket.objects.get(id=ticket_id).first():
+            is_ticket_open = check_ticket.status == 'open'
+        else:
+            return "wrong ticket id"
+    except Ticket.DoesNotExist:
+        return "Ticket not available or already assigned"
+    if is_ticket_open:
+        ticket = Ticket.objects.get(id=ticket_id)
+        ticket.assigned_to = support_member
+        ticket.status = 'pending'
+        ticket.save()
+        TicketLog.objects.create(
+            ticket=ticket,
+            status='pending',
+            changed_by=support_member
+        )
+        return f"ticket #{ticket.id} is now assigned to {support_member.username}"
+    else:
+        return "Ticket not available or already assigned"
