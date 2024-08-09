@@ -20,8 +20,8 @@ def generate_response(response, wa_id, name):
     if response in ["hi", "hello", "hey","hie"]:
         return f"Hello {name}, how can I help you today?"
     if len(response) > 5:
-        print('handling inquiry')
-        response =handle_inquiry(wa_id, response, name)
+        response = handle_inquiry(wa_id, response, name)
+        print('handling inquiry',response)
         return response
     if wa_id[0] == "263779586059" and response == "1":
         print('accepting ticket')
