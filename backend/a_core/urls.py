@@ -22,6 +22,7 @@ from a_bot.webhooks import webhook
 from a_bot.accept_ticket import *
 from django.conf import settings
 from django.conf.urls.static import static
+from a_bot.tests import test
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -48,6 +49,7 @@ urlpatterns += [
     path('tickets/', ticket_list, name='ticket-list'),
     path('tickets/create/', ticket_create, name='ticket-create'),
     path('ticket/<int:pk>/', ticket_detail, name='ticket-detail'),
+    path('test/<str:ticket_id>/', test, name='test'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

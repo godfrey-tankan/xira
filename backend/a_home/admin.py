@@ -4,13 +4,13 @@ from .models import *
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ['title', 'status', 'created_at', 'updated_at']
+    list_display = ['id','title', 'status', 'created_at', 'updated_at']
     search_fields = ['title', 'status']
     list_filter = ['status', 'created_at', 'updated_at']
 
 @admin.register(TicketLog)
 class TicketLogAdmin(admin.ModelAdmin):
-    list_display = ['ticket']
+    list_display = ['ticket','id']
     search_fields = ['ticket', 'action']
 
 @admin.register(Comment)
