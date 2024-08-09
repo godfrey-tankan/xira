@@ -27,7 +27,7 @@ def generate_response(response, wa_id, name):
     except SupportMember.DoesNotExist:
         support_member = None
         
-    if response in greeting_messages:
+    if response.lower() in greeting_messages:
         return f"Hello {name}, how can I help you today?"
     if not support_member and wa_id[0]=="263779586059":
         print('not support member')
